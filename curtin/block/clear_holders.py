@@ -650,7 +650,7 @@ def start_clear_holders_deps():
     mdadm.mdadm_assemble(scan=True, ignore_errors=True)
     # collect detail on any assembling arrays
     for md in [md for md in glob.glob('/dev/md*')
-               if not os.path.isdir(md) and not identify_partition(md)]:
+               if not md.startswith('/dev/mdev') and not os.path.isdir(md) and not identify_partition(md)]:
         mdstat = None
         if os.path.exists('/proc/mdstat'):
             mdstat = util.load_file('/proc/mdstat')
@@ -700,7 +700,7 @@ def start_clear_holders_deps():
     # lad the bcache module bcause it is not present in the kernel. if this
     # happens then there is no need to halt installation, as the bcache devices
     # will never appear and will never prevent the disk from being reformatted
-    util.load_kernel_module('bcache')
+    util.load_kernel_module('mbcache')
 
     if not zfs.zfs_supported():
         LOG.warning('zfs filesystem is not supported in this environment')
