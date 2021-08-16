@@ -991,6 +991,8 @@ def human2bytes(size):
             raise ValueError("'%s': resulted in non-integer (%s)" %
                              (size_in, int(size)))
         return size
+    elif isinstance(size, unicode):
+        size = size.encode('ascii','ignore')
     elif not isinstance(size, str):
         raise TypeError("cannot convert type %s ('%s')." % (type(size), size))
 

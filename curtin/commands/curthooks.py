@@ -1276,7 +1276,7 @@ def install_missing_packages(cfg, target, osfamily=DISTROS.debian):
                 # signed version.
                 uefi_pkgs.extend(['grub2-efi-x64', 'shim-x64'])
         elif osfamily == DISTROS.debian:
-            arch = distro.get_architecture()
+            arch = distro.get_architecture(target)
             if arch == 'i386':
                 arch = 'ia32'
             uefi_pkgs.append('grub-efi-%s' % arch)
@@ -1284,7 +1284,7 @@ def install_missing_packages(cfg, target, osfamily=DISTROS.debian):
             # Architecture might support a signed UEFI loader
             uefi_pkg_signed = 'grub-efi-%s-signed' % arch
             if distro.has_pkg_available(uefi_pkg_signed):
-                uefi_pkgs.append(uefi_pkg_signed)
+                uefi_pkgs.append(uefi_pkg_signed, target, osfamily)
 
             # AMD64 has shim-signed for SecureBoot support
             if arch == "amd64":

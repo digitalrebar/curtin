@@ -461,8 +461,7 @@ def get_pardevs_on_blockdevs(devs):
     found = _lsblock(devs)
     ret = {}
     for short in found:
-        if found[short]['device_path'] not in devs:
-            ret[short] = found[short]
+        ret[short] = found[short]
     return ret
 
 
